@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body::after {
+  content: "";
+  background-image: url("/bg2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.5;
+  height: 100dvh;
+  width: 100dvw;
+}
+
+body::before {
+  content: "";
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 0.5;
+  height: 100dvh;
+  width: 100dvw;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+.selector-card {
+  @apply relative z-0 rounded-lg px-6 py-4 cursor-pointer select-none;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.selector-card:not(.active) {
+  @apply border-2 border-white;
+}
+
+.selector-card.active::before {
+  width: 100%;
+  height: 100%;
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: 2px;
+  border-radius: 8px;
+  background: radial-gradient(
+    circle at left,
+    rgba(65, 207, 213, 1) 50%,
+
+    rgba(64, 122, 218, 1) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.text-gradient {
+  background: #41cfd5;
+  background: linear-gradient(to right, #41cfd5 0%, #407ada 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-lg text-white font-medium duration-300;
+}
+.btn.btn-gradient {
+  background: rgb(64, 122, 218);
+  background: linear-gradient(
+    320deg,
+    rgba(64, 122, 218, 1) 0%,
+    rgba(65, 207, 213, 1) 100%
+  );
+}

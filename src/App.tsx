@@ -5,8 +5,6 @@ import ModelSelectorPage from "./pages/ModelSelectorPage";
 function App() {
   const [resultImage, setResultImage] = useState<string | undefined>(undefined);
 
-  console.log(resultImage);
-
   return (
     <>
       {resultImage ? (

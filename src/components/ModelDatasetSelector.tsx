@@ -7,14 +7,14 @@ const modelList = [
     description: "SVM",
   },
   {
-    id: "3D_CNN",
+    id: "3D CNN",
     name: "3D CNN",
     description: "3D CNN",
   },
 ];
 const datasetList = [
   {
-    id: "Indian_Pine",
+    id: "Indian Pine",
     name: "Indian Pine",
     description: "Indian Pine",
   },

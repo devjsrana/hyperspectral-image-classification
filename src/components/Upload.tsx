@@ -1,8 +1,8 @@
 import { useRef } from "react";
 
 type Props = {
-  selectedImage?: string;
-  setSelectedImage: (file?: string) => void;
+  selectedImage?: File;
+  setSelectedImage: (file?: File) => void;
 };
 
 const Upload = (props: Props) => {
@@ -12,7 +12,7 @@ const Upload = (props: Props) => {
     const file = e.target.files?.[0];
 
     if (file) {
-      props.setSelectedImage(URL.createObjectURL(file));
+      props.setSelectedImage(file);
     }
   };
 
@@ -26,14 +26,18 @@ const Upload = (props: Props) => {
   return (
     <section className="flex flex-col items-center gap-5">
       {props.selectedImage ? (
-        <img src={props.selectedImage} alt="" className="w-full max-w-lg" />
+        <img
+          src={URL.createObjectURL(props.selectedImage)}
+          alt=""
+          className="w-full max-w-lg"
+        />
       ) : (
         <div className="w-44 h-44 border flex justify-center items-center rounded overflow-hidden relative">
           Click to Upload
           <input
             ref={fileInput}
             type="file"
-            accept="image/*, .heic"
+            accept=".npy"
             className="bg-red-200 absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
             onChange={handleFileChange}
           />

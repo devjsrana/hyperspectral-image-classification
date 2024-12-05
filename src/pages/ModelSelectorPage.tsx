@@ -2,26 +2,24 @@ import { useState } from "react";
 import { cn } from "../lib/utils";
 import Upload from "../components/Upload";
 import ModelDatasetSelector from "../components/ModelDatasetSelector";
+import toast from "react-hot-toast";
+import { IMAGE_CLASSIFICATION_URL } from "../constants/variables";
+import { TResult } from "../App";
 
 type Props = {
-  onSubmit: (resultImage?: string) => void;
-  onImageUpload?: (image: string) => void;
+  setResult: (data: TResult) => void;
 };
 
 const ModelSelectorPage = (props: Props) => {
   const [step, setStep] = useState(1);
   const [selectedDataset, setSelectedDataset] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string>();
+  const [selectedImage, setSelectedImage] = useState<File>();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNext = () => {
     if (step === 2) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        setIsSubmitting(false);
-        props.onSubmit(selectedImage);
-      }, 2000);
+      handleImageUpload();
     } else {
       setStep(step + 1);
     }
@@ -30,6 +28,31 @@ const ModelSelectorPage = (props: Props) => {
   const handleBack = () => {
     if (step !== 1) {
       setStep(step - 1);
+    }
+  };
+
+  const handleImageUpload = async () => {
+    if (!selectedImage) return;
+    setIsSubmitting(true);
+    try {
+      const data = new FormData();
+      data.append("image_file", selectedImage as Blob);
+      const response = await fetch(IMAGE_CLASSIFICATION_URL, {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+      props.setResult({
+        accuracy: result.accuracy,
+        resultImage: result.base64_image,
+        inputImage: URL.createObjectURL(selectedImage),
+      });
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

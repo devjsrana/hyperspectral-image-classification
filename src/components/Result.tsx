@@ -1,8 +1,8 @@
-import { resultImage } from "../constants/images";
+import { TResult } from "../App";
+
 type Props = {
   onClear?: () => void;
-  resultImage?: string;
-  inputImage?: string;
+  result: TResult;
 };
 
 const Result = (props: Props) => {
@@ -14,7 +14,7 @@ const Result = (props: Props) => {
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <img
-            src={props.inputImage || resultImage}
+            src={props.result.inputImage}
             alt=""
             className="w-full max-w-2xl"
           />
@@ -22,7 +22,7 @@ const Result = (props: Props) => {
         </div>
         <div>
           <img
-            src={props.resultImage || resultImage}
+            src={props.result.resultImage}
             alt=""
             className="w-full max-w-2xl"
           />
@@ -31,11 +31,11 @@ const Result = (props: Props) => {
       </div>
       <div className="text-center">
         <div>
-          Accuracy: <span>95%</span>
+          Accuracy: <span>{props.result.accuracy}</span>
         </div>
-        <div>
+        {/* <div>
           Total response time: <span>20s</span>
-        </div>
+        </div> */}
       </div>
 
       <button className="btn btn-gradient  mt-4" onClick={props.onClear}>

@@ -1,20 +1,29 @@
 import { useState } from "react";
 import Result from "./components/Result";
 import ModelSelectorPage from "./pages/ModelSelectorPage";
+import { Toaster } from "react-hot-toast";
+
+export type TResult = {
+  inputImage: string;
+  resultImage: string;
+  accuracy: number;
+};
 
 function App() {
-  const [resultImage, setResultImage] = useState<string | undefined>(undefined);
+  const [resultImage, setResultImage] = useState<TResult | undefined>(
+    undefined
+  );
 
   return (
     <>
+      <Toaster />
       {resultImage ? (
         <Result
           onClear={() => setResultImage(undefined)}
-          inputImage={resultImage}
-          resultImage={resultImage}
+          result={resultImage}
         />
       ) : (
-        <ModelSelectorPage onSubmit={setResultImage} />
+        <ModelSelectorPage setResult={setResultImage} />
       )}
     </>
   );

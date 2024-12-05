@@ -46,6 +46,7 @@ const ModelSelectorPage = (props: Props) => {
       if (!response.ok) {
         throw new Error(result.message);
       }
+      setIsSubmitting(false);
       props.setResult({
         accuracy: result.accuracy,
         resultImage: result.base64_image,
@@ -53,6 +54,7 @@ const ModelSelectorPage = (props: Props) => {
       });
     } catch (error: any) {
       toast.error(error.message);
+      setIsSubmitting(false);
     }
   };
 

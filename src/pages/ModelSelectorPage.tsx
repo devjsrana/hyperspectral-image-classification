@@ -33,12 +33,6 @@ const ModelSelectorPage = (props: Props) => {
     }
   };
 
-  // const isNextDisabled =
-  //   step === 1
-  //     ? selectedDataset === null
-  //     : step === 2
-  //     ? selectedModel === null
-  //     : selectedImage === undefined;
   const isNextDisabled =
     !selectedDataset || !selectedModel || (step === 2 && !selectedImage);
 
@@ -56,10 +50,7 @@ const ModelSelectorPage = (props: Props) => {
 
   return (
     <div className="min-h-dvh w-full flex justify-center items-center py-8 px-4">
-      <div className="w-full max-w-2xl overflow-hidden">
-        {/* <h1 className="text-xl sm:text-3xl font-bold text-center mx-auto mb-8 uppercase text-gradient max-w-sm py-4">
-          Select a {step === 1 ? "dataset" : step === 2 ? "model" : "image"}
-        </h1> */}
+      <div className="w-full max-w-2xl overflow-hidden md:bg-black md:p-6 md:rounded-2xl md:bg-opacity-10">
         <h1 className="text-xl sm:text-3xl font-bold text-center mx-auto mb-8 uppercase text-gradient max-w-sm py-4">
           Hyperspectral Image Classification
         </h1>
@@ -74,13 +65,6 @@ const ModelSelectorPage = (props: Props) => {
           </>
         )}
 
-        {/* {step === 2 && (
-          <ModelSelector
-            selectedModel={selectedModel}
-            onSelect={setSelectedModel}
-          />
-        )} */}
-
         {step === 2 && (
           <Upload
             selectedImage={selectedImage}
@@ -88,7 +72,9 @@ const ModelSelectorPage = (props: Props) => {
           />
         )}
 
-        <div className="flex items-center mt-6 gap-2">
+        <div
+          className={cn("flex items-center mt-6", step !== 1 ? "gap-2" : "")}
+        >
           <button
             className={cn(
               "btn bg-white bg-opacity-50 !text-black overflow-hidden !px-0",

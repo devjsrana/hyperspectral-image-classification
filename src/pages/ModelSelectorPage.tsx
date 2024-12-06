@@ -14,7 +14,10 @@ const ModelSelectorPage = (props: Props) => {
   const [step, setStep] = useState(1);
   const [selectedDataset, setSelectedDataset] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<File>();
+  const [selectedImage, setSelectedImage] = useState<{
+    x?: File;
+    y?: File;
+  }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNext = () => {
@@ -35,8 +38,10 @@ const ModelSelectorPage = (props: Props) => {
     if (!selectedImage) return;
     setIsSubmitting(true);
     try {
+      const startTime = Date.now();
       const data = new FormData();
-      data.append("image_file", selectedImage as Blob);
+      data.append("x_test", selectedImage.x as Blob);
+      data.append("y_test", selectedImage.y as Blob);
       const response = await fetch(IMAGE_CLASSIFICATION_URL, {
         method: "POST",
         body: data,
@@ -44,13 +49,18 @@ const ModelSelectorPage = (props: Props) => {
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message);
+        throw new Error(result.error);
       }
       setIsSubmitting(false);
+
+      const endTime = Date.now();
+      const response_time = (endTime - startTime) / 1000;
+
       props.setResult({
         accuracy: result.accuracy,
-        resultImage: result.base64_image,
-        inputImage: URL.createObjectURL(selectedImage),
+        resultImage: "data:image/jpeg;base64," + result.base64_image,
+        inputImage: "data:image/jpeg;base64," + result.input_image,
+        response_time: response_time,
       });
     } catch (error: any) {
       toast.error(error.message);
@@ -59,7 +69,9 @@ const ModelSelectorPage = (props: Props) => {
   };
 
   const isNextDisabled =
-    !selectedDataset || !selectedModel || (step === 2 && !selectedImage);
+    !selectedDataset ||
+    !selectedModel ||
+    (step === 2 && (!selectedImage.x || !selectedImage.y));
 
   if (isSubmitting) {
     return (
@@ -92,7 +104,8 @@ const ModelSelectorPage = (props: Props) => {
 
         {step === 2 && (
           <Upload
-            selectedImage={selectedImage}
+            selectedXFile={selectedImage.x}
+            selectedYFile={selectedImage.y}
             setSelectedImage={setSelectedImage}
           />
         )}

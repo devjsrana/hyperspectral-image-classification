@@ -7,6 +7,7 @@ export type TResult = {
   inputImage: string;
   resultImage: string;
   accuracy: number;
+  response_time: number;
 };
 
 function App() {

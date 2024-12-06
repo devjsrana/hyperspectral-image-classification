@@ -18,7 +18,7 @@ const Result = (props: Props) => {
             alt=""
             className="w-full max-w-2xl"
           />
-          <p className="text-center md:text-xl">Input Image</p>
+          <p className="text-center md:text-xl mt-1">Input Image</p>
         </div>
         <div>
           <img
@@ -26,19 +26,30 @@ const Result = (props: Props) => {
             alt=""
             className="w-full max-w-2xl"
           />
-          <p className="text-center text-xl">Output Image</p>
+          <p className="text-center md:text-xl mt-1">Output Image</p>
         </div>
       </div>
-      <div className="text-center">
-        <div>
-          Accuracy: <span>{props.result.accuracy}</span>
-        </div>
-        {/* <div>
-          Total response time: <span>20s</span>
-        </div> */}
+      <div className="mt-6">
+        <h2 className="text-xl font-bold text-center">Result Details</h2>
+        <table className="w-full max-w-lg mt-1">
+          <tbody>
+            <tr>
+              <td className="border px-4 py-1">Accuracy:</td>
+              <td className="border px-4 py-1 text-center">
+                {(props.result.accuracy * 100).toFixed(2)}%
+              </td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-1">Response Time:</td>
+              <td className="border px-4 py-1 text-center">
+                {props.result.response_time} sec
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <button className="btn btn-gradient  mt-4" onClick={props.onClear}>
+      <button className="btn btn-gradient  mt-6" onClick={props.onClear}>
         Process Another Image
       </button>
     </div>

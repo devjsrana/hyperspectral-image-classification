@@ -5,11 +5,13 @@ const modelList = [
     id: "SVM",
     name: "SVM",
     description: "SVM",
+    disabled: false,
   },
   {
     id: "3D CNN",
     name: "3D CNN",
     description: "3D CNN",
+    disabled: true,
   },
 ];
 const datasetList = [
@@ -17,11 +19,13 @@ const datasetList = [
     id: "Indian Pine",
     name: "Indian Pine",
     description: "Indian Pine",
+    disabled: false,
   },
   {
     id: "xyz",
     name: "xyz",
     description: "xyz",
+    disabled: true,
   },
 ];
 

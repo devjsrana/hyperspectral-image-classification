@@ -1,4 +1,5 @@
 import { TResult } from "../App";
+import ShowLegend from "./ShowLegend";
 
 type Props = {
   onClear?: () => void;
@@ -11,7 +12,7 @@ const Result = (props: Props) => {
       <h1 className="text-xl sm:text-3xl font-bold text-center mx-auto mb-8 uppercase text-gradient">
         Result
       </h1>
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <div>
           <img
             src={props.result.inputImage}
@@ -28,6 +29,7 @@ const Result = (props: Props) => {
           />
           <p className="text-center md:text-xl mt-1">Output Image</p>
         </div>
+        <ShowLegend />
       </div>
       <div className="mt-6">
         <h2 className="text-xl font-bold text-center">Result Details</h2>

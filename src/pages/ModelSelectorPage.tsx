@@ -167,7 +167,7 @@ const ModelSelectorPage = (props: Props) => {
 
   if (isSubmitting) {
     return (
-      <div className="min-h-dvh w-full flex justify-center items-center py-8 px-4">
+      <div className="min-h-[calc(100dvh-80px)] w-full flex justify-center items-center py-8 px-4">
         <div className="w-full max-w-2xl overflow-hidden">
           <h1 className="text-xl sm:text-3xl font-bold text-center mx-auto mb-8 uppercase text-gradient max-w-sm py-4 animate-pulse">
             Processing...
@@ -178,7 +178,7 @@ const ModelSelectorPage = (props: Props) => {
   }
 
   return (
-    <div className="min-h-dvh w-full flex justify-center items-center py-8 px-4">
+    <div className="min-h-[calc(100dvh-80px)] w-full flex justify-center items-center py-8 px-4">
       <div className="w-full max-w-2xl overflow-hidden md:bg-black md:p-6 md:rounded-2xl md:bg-opacity-10">
         <h1 className="text-xl sm:text-3xl font-bold text-center mx-auto mb-8 uppercase text-gradient max-w-sm py-4">
           Hyperspectral Image Classification

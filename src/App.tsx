@@ -2,6 +2,7 @@ import { useState } from "react";
 import Result from "./components/Result";
 import ModelSelectorPage from "./pages/ModelSelectorPage";
 import { Toaster } from "react-hot-toast";
+import Navbar from "./components/Navbar";
 
 export type TResult = {
   inputImage: string;
@@ -18,6 +19,7 @@ function App() {
   return (
     <>
       <Toaster />
+      <Navbar />
       {resultImage ? (
         <Result
           onClear={() => setResultImage(undefined)}

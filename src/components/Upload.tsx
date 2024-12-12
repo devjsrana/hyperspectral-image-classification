@@ -48,7 +48,7 @@ const Upload = (props: Props) => {
           <input
             ref={file1InputRef}
             type="file"
-            accept=".npy"
+            accept={props.model === "svm" ? ".npy" : ".pkl"}
             className="bg-red-200 absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
             onChange={handleFile1Change}
           />
@@ -62,7 +62,7 @@ const Upload = (props: Props) => {
           <input
             ref={file2InputRef}
             type="file"
-            accept=".npy"
+            accept={props.model === "svm" ? ".npy" : ".pkl"}
             className="bg-red-200 absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
             onChange={handleFile2Change}
           />

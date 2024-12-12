@@ -22,8 +22,27 @@ const ModelSelectorPage = (props: Props) => {
 
   const handleNext = () => {
     if (step === 2) {
-      handleImageUpload();
+      if (selectedModel === "svm" && selectedDataset === "indian_pine") {
+        submitSvmIndianPine();
+        return;
+      }
+      // if (selectedModel === "svm" && selectedDataset === "pavia_u") {
+      //   toast.error("SVM is not supported for Pavia U dataset");
+      //   return;
+      // }
+      if (selectedModel === "3d_cnn" && selectedDataset === "indian_pine") {
+        submitCnnIndianPine();
+        return;
+      }
+      if (selectedModel === "3d_cnn" && selectedDataset === "pavia_u") {
+        submitCnnPaviau();
+        return;
+      }
     } else {
+      if (selectedModel === "svm" && selectedDataset === "pavia_u") {
+        toast.error("SVM is not supported for Pavia U dataset");
+        return;
+      }
       setStep(step + 1);
     }
   };
@@ -34,7 +53,7 @@ const ModelSelectorPage = (props: Props) => {
     }
   };
 
-  const handleImageUpload = async () => {
+  const submitSvmIndianPine = async () => {
     if (!selectedImage) return;
     setIsSubmitting(true);
     try {
@@ -42,7 +61,75 @@ const ModelSelectorPage = (props: Props) => {
       const data = new FormData();
       data.append("x_test", selectedImage.file1 as Blob);
       data.append("y_test", selectedImage.file2 as Blob);
-      const response = await fetch(BASE_URL, {
+      const response = await fetch(`${BASE_URL}/predict-image`, {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error);
+      }
+      setIsSubmitting(false);
+
+      const endTime = Date.now();
+      const response_time = (endTime - startTime) / 1000;
+
+      props.setResult({
+        accuracy: result.accuracy,
+        resultImage: "data:image/jpeg;base64," + result.base64_image,
+        inputImage: "data:image/jpeg;base64," + result.input_image,
+        response_time: response_time,
+      });
+    } catch (error: any) {
+      toast.error(error.message);
+      setIsSubmitting(false);
+    }
+  };
+
+  const submitCnnIndianPine = async () => {
+    if (!selectedImage) return;
+    setIsSubmitting(true);
+    try {
+      const startTime = Date.now();
+      const data = new FormData();
+      data.append("pca", selectedImage.file1 as Blob);
+      data.append("labels", selectedImage.file2 as Blob);
+      const response = await fetch(`${BASE_URL}/predict-cnn-ind`, {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error);
+      }
+      setIsSubmitting(false);
+
+      const endTime = Date.now();
+      const response_time = (endTime - startTime) / 1000;
+
+      props.setResult({
+        accuracy: result.accuracy,
+        resultImage: "data:image/jpeg;base64," + result.base64_image,
+        inputImage: "data:image/jpeg;base64," + result.input_image,
+        response_time: response_time,
+      });
+    } catch (error: any) {
+      toast.error(error.message);
+      setIsSubmitting(false);
+    }
+  };
+
+  const submitCnnPaviau = async () => {
+    if (!selectedImage) return;
+    setIsSubmitting(true);
+    try {
+      const startTime = Date.now();
+      const data = new FormData();
+      data.append("pca", selectedImage.file1 as Blob);
+      data.append("labels", selectedImage.file2 as Blob);
+      const response = await fetch(`${BASE_URL}/predict-cnn-paviau`, {
         method: "POST",
         body: data,
       });

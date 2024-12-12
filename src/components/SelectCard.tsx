@@ -3,7 +3,6 @@ type Props = {
     id: string;
     name: string;
     description: string;
-    disabled: boolean;
   }[];
   title: string;
   onSelect?: (value: string) => void;
@@ -30,12 +29,7 @@ const SelectCard = (props: Props) => {
       >
         <option value={""}>{props.placeholder}</option>
         {props.options.map((item) => (
-          <option
-            key={item.id}
-            value={item.id}
-            className="w-full"
-            disabled={item.disabled}
-          >
+          <option key={item.id} value={item.id} className="w-full">
             {item.name}
           </option>
         ))}

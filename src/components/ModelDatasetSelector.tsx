@@ -2,30 +2,26 @@ import SelectCard from "./SelectCard";
 
 const modelList = [
   {
-    id: "SVM",
+    id: "svm",
     name: "SVM",
     description: "SVM",
-    disabled: false,
   },
   {
-    id: "3D CNN",
+    id: "3d_cnn",
     name: "3D CNN",
     description: "3D CNN",
-    disabled: true,
   },
 ];
 const datasetList = [
   {
-    id: "Indian Pine",
+    id: "indian_pine",
     name: "Indian Pine",
     description: "Indian Pine",
-    disabled: false,
   },
   {
-    id: "xyz",
-    name: "xyz",
-    description: "xyz",
-    disabled: true,
+    id: "pavia_u",
+    name: "pavia_U",
+    description: "pavia_U",
   },
 ];
 

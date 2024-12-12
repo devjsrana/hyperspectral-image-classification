@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { cn } from "../lib/utils";
 import Upload from "../components/Upload";
 import ModelDatasetSelector from "../components/ModelDatasetSelector";
 import toast from "react-hot-toast";
-import { IMAGE_CLASSIFICATION_URL } from "../constants/variables";
+import { BASE_URL } from "../constants/variables";
 import { TResult } from "../App";
 
 type Props = {
@@ -15,8 +15,8 @@ const ModelSelectorPage = (props: Props) => {
   const [selectedDataset, setSelectedDataset] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<{
-    x?: File;
-    y?: File;
+    file1?: File;
+    file2?: File;
   }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,9 +40,9 @@ const ModelSelectorPage = (props: Props) => {
     try {
       const startTime = Date.now();
       const data = new FormData();
-      data.append("x_test", selectedImage.x as Blob);
-      data.append("y_test", selectedImage.y as Blob);
-      const response = await fetch(IMAGE_CLASSIFICATION_URL, {
+      data.append("x_test", selectedImage.file1 as Blob);
+      data.append("y_test", selectedImage.file2 as Blob);
+      const response = await fetch(BASE_URL, {
         method: "POST",
         body: data,
       });
@@ -68,10 +68,15 @@ const ModelSelectorPage = (props: Props) => {
     }
   };
 
-  const isNextDisabled =
-    !selectedDataset ||
-    !selectedModel ||
-    (step === 2 && (!selectedImage.x || !selectedImage.y));
+  const isNextDisabled = useMemo(() => {
+    if (!selectedDataset || !selectedModel) return true;
+    if (step === 2) {
+      if (!selectedImage.file1 || !selectedImage.file2) {
+        return true;
+      }
+    }
+    return false;
+  }, [selectedDataset, selectedModel, selectedImage]);
 
   if (isSubmitting) {
     return (
@@ -104,9 +109,10 @@ const ModelSelectorPage = (props: Props) => {
 
         {step === 2 && (
           <Upload
-            selectedXFile={selectedImage.x}
-            selectedYFile={selectedImage.y}
+            selectedFile1={selectedImage.file1}
+            selectedFile2={selectedImage.file2}
             setSelectedImage={setSelectedImage}
+            model={selectedModel === "svm" ? "svm" : "cnn"}
           />
         )}
 

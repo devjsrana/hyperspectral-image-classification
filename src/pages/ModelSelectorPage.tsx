@@ -80,6 +80,7 @@ const ModelSelectorPage = (props: Props) => {
         resultImage: "data:image/jpeg;base64," + result.base64_image,
         inputImage: "data:image/jpeg;base64," + result.input_image,
         response_time: response_time,
+        isPavia: false,
       });
     } catch (error: any) {
       toast.error(error.message);
@@ -114,6 +115,7 @@ const ModelSelectorPage = (props: Props) => {
         resultImage: "data:image/jpeg;base64," + result.base64_image,
         inputImage: "data:image/jpeg;base64," + result.input_image,
         response_time: response_time,
+        isPavia: false,
       });
     } catch (error: any) {
       toast.error(error.message);
@@ -148,6 +150,7 @@ const ModelSelectorPage = (props: Props) => {
         resultImage: "data:image/jpeg;base64," + result.base64_image,
         inputImage: "data:image/jpeg;base64," + result.input_image,
         response_time: response_time,
+        isPavia: true,
       });
     } catch (error: any) {
       toast.error(error.message);

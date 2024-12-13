@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../constants/variables";
 
-const ShowLegend = () => {
+type Props = {
+  isPavia?: boolean;
+};
+
+const ShowLegend = (props: Props) => {
   const [legendImg, setLegendImg] = useState<string>();
   useEffect(() => {
     fetchLegend();
   }, []);
 
   const fetchLegend = async () => {
+    const url = new URL(`${BASE_URL}/legend`);
+    if (!props.isPavia) {
+      url.searchParams.append("type", "svm");
+    }
     try {
-      const response = await fetch(`${BASE_URL}/legend`, {
+      const response = await fetch(url, {
         method: "GET",
       });
 

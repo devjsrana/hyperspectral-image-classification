@@ -29,7 +29,7 @@ const Result = (props: Props) => {
           />
           <p className="text-center md:text-xl mt-1">Output Image</p>
         </div>
-        <ShowLegend />
+        <ShowLegend isPavia={props.result.isPavia} />
       </div>
       <div className="mt-6">
         <h2 className="text-xl font-bold text-center">Result Details</h2>

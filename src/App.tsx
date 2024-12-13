@@ -9,6 +9,7 @@ export type TResult = {
   resultImage: string;
   accuracy: number;
   response_time: number;
+  isPavia: boolean;
 };
 
 function App() {
